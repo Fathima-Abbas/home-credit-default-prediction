@@ -90,8 +90,8 @@ def train_model(df):
         mlflow.sklearn.log_model(model,"lightgbm_model")
         print("\nMLflow Run Completed")
 
-    # joblib.dump(model,"models/model.pkl") 
-    # # joblib.dump(X.columns.tolist(),"models/final_model.pkl")
-    # print("Model Saved")
+    joblib.dump(model,"models/model.pkl") 
+    # joblib.dump(X.columns.tolist(),"models/final_model.pkl")
+    print("Model Saved")
 
     return df
