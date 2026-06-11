@@ -5,7 +5,7 @@ env/
 
 # Python Cache
 
-*pycache*/
+**pycache**/
 *.pyc
 *.pyo
 *.pyd
