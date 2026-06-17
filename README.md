@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This project predicts whether a customer will default on a loan using the Home Credit Default Risk dataset.
+This project predicts whether a customer is likely to default on a loan using the Home Credit Default Risk dataset from Kaggle.
 
-The project follows a complete Machine Learning and MLOps workflow including:
+The project follows an end-to-end Machine Learning and MLOps workflow including:
 
 * Data Preprocessing
 * Feature Engineering
@@ -13,11 +13,19 @@ The project follows a complete Machine Learning and MLOps workflow including:
 * Hyperparameter Tuning
 * MLflow Experiment Tracking
 * Pipeline Automation
+* API Development
+* Cloud Deployment
 * Git Version Control
-* Model Deployment
 
 ---
 
+## Live API Deployment
+
+Hosted FastAPI Swagger Documentation:
+
+https://home-credit-default-risk-api-tz8o.onrender.com/docs
+
+---
 
 ## Dataset
 
@@ -25,10 +33,10 @@ The project follows a complete Machine Learning and MLOps workflow including:
 
 **Files Used:**
 
-* application_train.csv
-* bureau.csv
+* `application_train.csv`
+* `bureau.csv`
 
-**Source:** Kaggle Home Credit Default Risk Dataset
+**Source:** Kaggle - Home Credit Default Risk
 
 ---
 
@@ -37,30 +45,41 @@ The project follows a complete Machine Learning and MLOps workflow including:
 ```text
 home-credit-default-risk-pred/
 
+├── images/
+│   └── architecture_diagram.png
+│
 ├── data/
 │   ├── application_train.csv
 │   ├── bureau.csv
-│   └── preprocessed_data.csv
+│   ├── preprocessed_data.csv
 │
-├── notebooks/
+├── models/
+│   └── model.pkl
 │
 ├── src/
 │   ├── preprocessing.py
 │   ├── feature_engineering.py
 │   ├── feature_selection.py
 │   ├── train_model.py
-│   ├── main.py
-│   └── api.py
-│
-├── models/
-│   └── model.pkl
+│   ├── api.py
+│   └── main.py
 │
 ├── mlruns/
 │
 ├── README.md
-├── .gitignore
-└── requirements.txt
+├── requirements.txt
+└── .gitignore
 ```
+
+---
+
+## Architecture Diagram
+
+<p align="center">
+  <img src="images/architecture_diagram.png"
+       alt="Home Credit Default Risk MLOps Architecture"
+       width="1200">
+</p>
 
 ---
 
@@ -68,27 +87,26 @@ home-credit-default-risk-pred/
 
 ### 1. Data Preprocessing
 
-* Load `application_train.csv`
-* Load `bureau.csv`
-* Bureau Aggregation
-* Merge Datasets
-* Missing Value Handling
-* Target Encoding
-* Drop Low Importance Features
+* Load datasets
+* Bureau data aggregation
+* Dataset merging
+* Missing value handling
+* Target encoding
+* Feature cleanup
 
 ### 2. Feature Engineering
 
-Created Features:
+Created features include:
 
 * AGE
 * YEARS_EMPLOYED
 * EMPLOYED_BIRTH_RATIO
 * GOODS_INCOME_RATIO
-* EXT_SOURCE_RANGE
 * CREDIT_INCOME_RATIO
 * ANNUITY_INCOME_RATIO
 * PAYMENT_RATE
 * GOODS_CREDIT_RATIO
+* EXT_SOURCE_RANGE
 * EXT_MEAN
 * EXT_STD
 * EXT_MIN
@@ -99,8 +117,8 @@ Created Features:
 
 ### 3. Feature Selection
 
-* Remove Weak Features
-* Remove Highly Correlated Features
+* Weak feature removal
+* Highly correlated feature removal
 
 ### 4. Model Training
 
@@ -121,7 +139,7 @@ Created Features:
 
 ### 5. MLflow Tracking
 
-MLflow is used for:
+MLflow was used for:
 
 * Experiment Tracking
 * Metric Logging
@@ -144,7 +162,7 @@ Tracked Metrics:
 venv\Scripts\activate
 ```
 
-### Run Pipeline
+### Run Training Pipeline
 
 ```bash
 python src/main.py
@@ -159,10 +177,37 @@ python src/main.py
 
 ---
 
-## Model Deployment
+## Running the API Locally
 
-**Framework:** FastAPI
+### Start FastAPI Server
 
+```bash
+uvicorn src.api:app --reload
+```
+
+### Open Swagger Documentation
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## API Endpoint
+
+### POST `/predict`
+
+Predicts customer default risk using input customer data.
+
+### Response Example
+
+```json
+{
+    "prediction": 0,
+    "risk_level": "LOW RISK",
+    "default_probability": 0.1234
+}
+```
 
 ---
 
@@ -171,10 +216,21 @@ python src/main.py
 * Python
 * Pandas
 * NumPy
+* Scikit-Learn
 * LightGBM
 * MLflow
 * FastAPI
 * Joblib
-* Scikit-Learn
 * Git
 * GitHub
+* Render
+
+---
+
+## Deployment
+
+* Backend Framework: FastAPI
+* Cloud Platform: Render
+* Model Serialization: Joblib
+
+
